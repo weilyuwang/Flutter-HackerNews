@@ -5,7 +5,7 @@ import 'dart:convert';
 final _root = "https://hacker-news.firebaseio.com/v0";
 
 class NewsApiProvider {
-  final http.Client client = http.Client();
+  http.Client client = http.Client();
 
   fetchTopIds() async {
     final response = await client.get('$_root/topstories.json');
