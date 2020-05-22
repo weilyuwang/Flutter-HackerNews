@@ -2,10 +2,12 @@ import 'package:flutter_hackernews/src/models/item_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
+import 'repository.dart';
 
 final _root = "https://hacker-news.firebaseio.com/v0";
 
-class NewsApiProvider {
+// Dart has no interface keyword.
+class NewsApiProvider implements Source {
   http.Client client = http.Client();
 
   Future<List<int>> fetchTopIds() async {

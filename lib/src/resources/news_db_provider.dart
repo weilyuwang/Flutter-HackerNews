@@ -1,3 +1,4 @@
+import 'package:flutter_hackernews/src/resources/repository.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart'; // to work with underlying file system
 import 'dart:io';
@@ -5,7 +6,7 @@ import 'package:path/path.dart';
 import '../models/item_model.dart';
 import 'dart:async';
 
-class NewsDbProvider {
+class NewsDbProvider implements Source, Cache {
   Database db;
 
   // function to create or reopen the database
@@ -53,5 +54,10 @@ class NewsDbProvider {
 
   Future<int> addItem(ItemModel item) {
     return db.insert("Items", item.toMap());
+  }
+
+  @override
+  Future<List<int>> fetchTopIds() {
+    return null;
   }
 }
