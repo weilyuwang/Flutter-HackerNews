@@ -12,7 +12,7 @@ class NewsApiProvider {
     final response = await client.get('$_root/topstories.json');
     final ids = json.decode(response.body); // json from dart:convert lib
 
-    return ids;
+    return ids.cast<int>(); // tell dart that ids is a list of int
   }
 
   Future<ItemModel> fetchItem(int id) async {
