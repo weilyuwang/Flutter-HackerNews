@@ -2,13 +2,13 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart'; // to work with underlying file system
 import 'dart:io';
 import 'package:path/path.dart';
-import 'dart:async';
 import '../models/item_model.dart';
 
 class NewsDbProvider {
   Database db;
 
   // function to create or reopen the database
+  // need to call init() first before we can use NewsDbProvider instance
   init() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     final path = join(documentsDirectory.path, "items.db");
