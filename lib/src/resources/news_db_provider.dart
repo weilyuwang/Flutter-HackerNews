@@ -36,11 +36,17 @@ class NewsDbProvider {
   }
 
   fetchItem(int id) async {
-    final maps = await db.query(
+    final List<Map<String, dynamic>> maps = await db.query(
       "Items",
       columns: null, // => set column to null will get all the columns
       where: "id = ?",
       whereArgs: [id],
     );
+
+    if (maps.length > 0) {
+      return ItemModel.fromDb(maps.elementAt(0));
+    }
+
+    return null;
   }
 }
