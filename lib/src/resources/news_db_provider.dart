@@ -3,13 +3,14 @@ import 'package:path_provider/path_provider.dart'; // to work with underlying fi
 import 'dart:io';
 import 'package:path/path.dart';
 import '../models/item_model.dart';
+import 'dart:async';
 
 class NewsDbProvider {
   Database db;
 
   // function to create or reopen the database
   // need to call init() first before we can use NewsDbProvider instance
-  init() async {
+  void init() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     final path = join(documentsDirectory.path, "items.db");
     db = await openDatabase(path, version: 1,
@@ -35,7 +36,7 @@ class NewsDbProvider {
     });
   }
 
-  fetchItem(int id) async {
+  Future<ItemModel> fetchItem(int id) async {
     final List<Map<String, dynamic>> maps = await db.query(
       "Items",
       columns: null, // => set column to null will get all the columns
@@ -50,7 +51,7 @@ class NewsDbProvider {
     return null;
   }
 
-  addItem(ItemModel item) {
+  Future<int> addItem(ItemModel item) {
     return db.insert("Items", item.toMap());
   }
 }
