@@ -9,6 +9,11 @@ import 'dart:async';
 class NewsDbProvider implements Source, Cache {
   Database db;
 
+  NewsDbProvider() {
+    // open the database
+    init();
+  }
+
   // function to create or reopen the database
   // need to call init() first before we can use NewsDbProvider instance
   void init() async {
@@ -61,3 +66,6 @@ class NewsDbProvider implements Source, Cache {
     return null;
   }
 }
+
+// only create one NewsDbProvider instance
+final newsDbProvider = NewsDbProvider();
