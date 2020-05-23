@@ -6,37 +6,32 @@ class NewsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // get the instance of StoriesBloc
-    final bloc = StoriesProvider.of(context);
+    final StoriesBloc bloc = StoriesProvider.of(context);
+
+    // TODO: BAD BEHAVIOR - ONLY FOR TEMPORARY TESTING
+    bloc.fetchTopIds();
 
     return Scaffold(
       appBar: AppBar(title: Text('Top News')),
-      body: buildList(),
+      body: buildList(bloc),
     );
   }
 
-  Widget buildList() {
-    return ListView.builder(
-      itemCount: 500,
-      itemBuilder: (BuildContext context, int index) {
-        return FutureBuilder(
-          future: getFuture(),
-          builder: (context, snapshot) {
-            return Container(
-              height: 80.0,
-              child: snapshot.hasData
-                  ? Text('Im visible $index')
-                  : Text('I havent fetched data yet $index'),
-            );
+  Widget buildList(StoriesBloc bloc) {
+    return StreamBuilder(
+      stream: bloc.topIds,
+      builder: (context, AsyncSnapshot<List<int>> snapshot) {
+        if (!snapshot.hasData) {
+          return Text('Still waiting on Ids');
+        }
+
+        return ListView.builder(
+          itemCount: snapshot.data.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Text((snapshot.data[index]).toString());
           },
         );
       },
-    );
-  }
-
-  getFuture() {
-    return Future.delayed(
-      Duration(seconds: 2),
-      () => 'h1',
     );
   }
 }
