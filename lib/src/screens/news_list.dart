@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import '../blocs/stories_provider.dart';
 
 class NewsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // get the instance of StoriesBloc
+    final bloc = StoriesProvider.of(context);
+
     return Scaffold(
       appBar: AppBar(title: Text('Top News')),
       body: buildList(),

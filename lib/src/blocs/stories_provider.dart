@@ -11,6 +11,7 @@ class StoriesProvider extends InheritedWidget {
   @override
   bool updateShouldNotify(_) => true;
 
+  // static method to get the instance of StoriesBloc from anywhere under StoriesProvider widget
   static StoriesBloc of(BuildContext context) {
     return (context.dependOnInheritedWidgetOfExactType<StoriesProvider>()).bloc;
   }
