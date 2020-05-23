@@ -5,28 +5,20 @@ import 'dart:async';
 
 class StoriesBloc {
   final _repository = Repository();
-  // subjects are basically stream controllers created by rxdart lib
-
-  // Exactly like a normal broadcast StreamController with one exception:
-  // this class is both a Stream and Sink.
   final _topIds = PublishSubject<List<int>>();
-
-  // A special StreamController that captures the latest item that has been added to the controller,
-  // and emits that as the first item to any new listener.
-  final _items = BehaviorSubject<int>();
-
-  // Transformed Stream
-  Stream<Map<int, Future<ItemModel>>> items;
+  final _itemsOutput = BehaviorSubject<Map<int, Future<ItemModel>>>();
+  final _itemsFetcher = PublishSubject<int>();
 
   // Getters to Streams
   Stream<List<int>> get topIds => _topIds.stream;
+  Stream<Map<int, Future<ItemModel>>> get items => _itemsOutput.stream;
 
   // Getters to Sinks
-  Function(int) get fetchItem => _items.sink.add;
+  Function(int) get fetchItem => _itemsFetcher.sink.add;
 
   StoriesBloc() {
-    // create the _itemsTransformer/cache only once
-    items = _items.stream.transform(_itemsTransformer());
+    // input: int id => _itemsFetcher stream => transform(int => Map) => _itemsOutput stream => outut: cache Map
+    _itemsFetcher.stream.transform(_itemsTransformer()).pipe(_itemsOutput);
   }
 
   fetchTopIds() async {
@@ -34,6 +26,7 @@ class StoriesBloc {
     _topIds.sink.add(ids);
   }
 
+  // transformer: id => cache map<id, ItemModel>
   _itemsTransformer() {
     return ScanStreamTransformer(
       (Map<int, Future<ItemModel>> cache, int id, _) {
@@ -47,6 +40,7 @@ class StoriesBloc {
   // clean up / dispose streamControllers/subjects
   dispose() {
     _topIds.close();
-    _items.close();
+    _itemsOutput.close();
+    _itemsFetcher.close();
   }
 }
