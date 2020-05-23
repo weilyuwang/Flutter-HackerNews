@@ -15,6 +15,7 @@ class StoriesBloc {
   // and emits that as the first item to any new listener.
   final _items = BehaviorSubject<int>();
 
+  // Transformed Stream
   Stream<Map<int, Future<ItemModel>>> items;
 
   // Getters to Streams
