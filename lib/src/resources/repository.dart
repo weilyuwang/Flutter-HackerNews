@@ -14,7 +14,7 @@ class Repository {
 
   Future<ItemModel> fetchItem(int id) async {
     ItemModel item;
-    Source source;
+    var source;
     // search for item in sources one by one, starting from cache
     for (source in sources) {
       item = await source.fetchItem(id);
@@ -25,7 +25,9 @@ class Repository {
     }
     // add item to cache (sqlite)
     for (var cache in caches) {
-      cache.addItem(item);
+      if (cache != source) {
+        cache.addItem(item);
+      }
     }
     return item;
   }
