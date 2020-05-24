@@ -8,7 +8,12 @@ class App extends StatelessWidget {
     return StoriesProvider(
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'News!',
+        title: 'Hacker News Flutter Demo',
+        theme: ThemeData(
+          appBarTheme: AppBarTheme(
+            color: Colors.orange[800],
+          ),
+        ),
         home: NewsList(),
       ),
     );

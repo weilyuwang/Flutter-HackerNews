@@ -13,7 +13,7 @@ class NewsList extends StatelessWidget {
     bloc.fetchTopIds();
 
     return Scaffold(
-      appBar: AppBar(title: Text('Top News')),
+      appBar: AppBar(title: Text('Hacker News')),
       body: buildList(bloc),
     );
   }
