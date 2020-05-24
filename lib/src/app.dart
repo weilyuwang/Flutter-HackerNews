@@ -28,9 +28,9 @@ class App extends StatelessWidget {
     } else {
       // if '/:id'
       return MaterialPageRoute(builder: (context) {
-        // TODO: extract the item id from settings.name
+        final itemId = int.parse(settings.name.replaceFirst('/', ''));
         // and pass into NewsDetail
-        return NewsDetail();
+        return NewsDetail(itemId: itemId);
       });
     }
   }
