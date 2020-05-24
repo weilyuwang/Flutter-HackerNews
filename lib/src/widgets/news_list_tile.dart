@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/item_model.dart';
 import '../blocs/stories_provider.dart';
+import 'loading_container.dart';
 // Future and Stream are now exported via dart:core -
 // no longer need to import async module to use Future/Stream
 
@@ -18,7 +19,7 @@ class NewsListTile extends StatelessWidget {
       builder: (BuildContext context,
           AsyncSnapshot<Map<int, Future<ItemModel>>> snapshot) {
         if (!snapshot.hasData) {
-          return Text('Stream still loading');
+          return LoadingContainer();
         }
 
         return FutureBuilder(
@@ -26,7 +27,7 @@ class NewsListTile extends StatelessWidget {
           builder:
               (BuildContext context, AsyncSnapshot<ItemModel> itemSnapshot) {
             if (!itemSnapshot.hasData) {
-              return Text('Still loading item $itemId');
+              return LoadingContainer();
             }
 
             return buildTile(itemSnapshot.data);
