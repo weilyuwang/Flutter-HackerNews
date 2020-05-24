@@ -15,12 +15,23 @@ class App extends StatelessWidget {
             color: Colors.orange[800],
           ),
         ),
-        onGenerateRoute: (RouteSettings setting) {
-          return MaterialPageRoute(builder: (context) {
-            return NewsList();
-          });
-        },
+        onGenerateRoute: routes,
       ),
     );
+  }
+
+  Route routes(RouteSettings settings) {
+    if (settings.name == '/') {
+      return MaterialPageRoute(builder: (context) {
+        return NewsList();
+      });
+    } else {
+      // if '/:id'
+      return MaterialPageRoute(builder: (context) {
+        // TODO: extract the item id from settings.name
+        // and pass into NewsDetail
+        return NewsDetail();
+      });
+    }
   }
 }
