@@ -14,7 +14,11 @@ class App extends StatelessWidget {
             color: Colors.orange[800],
           ),
         ),
-        home: NewsList(),
+        onGenerateRoute: (RouteSettings setting) {
+          return MaterialPageRoute(builder: (context) {
+            return NewsList();
+          });
+        },
       ),
     );
   }
