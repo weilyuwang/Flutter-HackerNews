@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hackernews/src/models/item_model.dart';
+import 'package:flutter_hackernews/src/widgets/comment.dart';
 import '../blocs/comments_provider.dart';
 
 class NewsDetail extends StatelessWidget {
@@ -44,9 +45,17 @@ class NewsDetail extends StatelessWidget {
   }
 
   Widget buildList(ItemModel item, Map<int, Future<ItemModel>> itemMap) {
+    final commentsList = item.kids.map((kidId) {
+      return Comment(
+        itemId: kidId,
+        itemMap: itemMap,
+      );
+    }).toList();
+
     return ListView(
       children: <Widget>[
         buildTitle(item),
+        ...commentsList,
       ],
     );
   }
