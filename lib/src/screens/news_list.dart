@@ -9,9 +9,6 @@ class NewsList extends StatelessWidget {
     // get the instance of StoriesBloc
     final StoriesBloc bloc = StoriesProvider.of(context);
 
-    // TODO: BAD BEHAVIOR - ONLY FOR TEMPORARY TESTING
-    bloc.fetchTopIds();
-
     return Scaffold(
       appBar: AppBar(title: Text('Hacker News')),
       body: buildList(bloc),
