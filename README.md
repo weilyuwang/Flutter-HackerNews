@@ -13,6 +13,7 @@ Hacker News API: https://github.com/HackerNews/API
 -   Cache/offline storage using SQLite
 -   Reactive Programming with streams by using RxDart
 -   Multi-Screen Navigation
+-   Mock HTTP client for testing
 
 #### DEMO
 
