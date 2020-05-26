@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/item_model.dart';
+import 'package:html/parser.dart';
 
 class Comment extends StatelessWidget {
   final int itemId;
@@ -21,8 +22,8 @@ class Comment extends StatelessWidget {
 
         final children = <Widget>[
           ListTile(
-            title: Text(item.text),
-            subtitle: item.by == ''
+            title: buildText(item),
+            subtitle: item.by == '' || item.by == null
                 ? Text('This comment has been deleted.')
                 : Text(item.by),
             contentPadding: EdgeInsets.only(right: 16.0, left: 16.0 * depth),
@@ -39,5 +40,10 @@ class Comment extends StatelessWidget {
         );
       },
     );
+  }
+
+  Widget buildText(ItemModel item) {
+    final document = parse(item.text);
+    return Text(parse(document.body.text).documentElement.text);
   }
 }

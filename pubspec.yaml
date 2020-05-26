@@ -38,6 +38,10 @@ dependencies:
 
     rxdart: ^0.24.1
 
+    flutter_html: ^1.0.0
+
+    html: ^0.14.0+3
+
 dev_dependencies:
     flutter_test:
         sdk: flutter
