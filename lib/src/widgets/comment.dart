@@ -21,7 +21,9 @@ class Comment extends StatelessWidget {
         final children = <Widget>[
           ListTile(
             title: Text(item.text),
-            subtitle: Text(item.by),
+            subtitle: item.by == ''
+                ? Text('This comment has been deleted.')
+                : Text(item.by),
           ),
           Divider(),
         ];
